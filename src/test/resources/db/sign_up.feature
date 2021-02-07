@@ -1,6 +1,6 @@
 Feature:  Verify data mapping of the user details in the database
 
-  @duotify
+  #@duotify
     Scenario: Verify sign-up details are correctly mapped with the DB
       Given I am in Sign Up page
       When I enter the following User details and sign up

@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.*;
 
 import pagesDuotify.HomePAge;
+import pagesDuotify.LoginPage;
 import pagesDuotify.SignUpPage;
 import utilities.DBUtils;
 import utilities.Driver;
@@ -88,4 +89,15 @@ public class DBMappingStepDefs {
         DBUtils.updateQuery(query);
 
     }
+
+
+
+
+
+
+
+
+
+
+
 }

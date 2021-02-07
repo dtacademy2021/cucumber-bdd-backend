@@ -14,4 +14,18 @@ public class HomePAge {
 
     @FindBy(xpath = "//span[@onclick=\"openPage('settings.php')\"]")
     public WebElement welcomePageName;
+
+    @FindBy(xpath = "//button[@onclick=\"openPage('updateDetails.php')\"]")
+    public WebElement userDetailsButton;
+
+    @FindBy(name = "email")
+    public WebElement emailInputbox;
+
+
+
+
+
+
 }
+
+
