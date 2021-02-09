@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 		
 
-		tags = "@duotify",    //"@negative or @smoke", "@smoke and @negative and @login"
+		tags = "@duotify_db_only",    //"@negative or @smoke", "@smoke and @negative and @login"
 
 		
 		features = "src/test/resources/db",  // feature file folder path

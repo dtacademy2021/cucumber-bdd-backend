@@ -28,12 +28,20 @@ public class Hooks2 {
 		DBUtils.createConnection();
 		
 	}
-	
 
-	
-	
-	
-	
+	@Before ("@duotify_db_only")
+	public void setupScenarioDB() {
+
+		DBUtils.createConnection();
+
+	}
+
+
+
+
+
+
+
 	@After ("@duotify")
 	public void tearDownScenario(Scenario scenario) {
 		
@@ -51,9 +59,13 @@ public class Hooks2 {
 
 		DBUtils.close();
 	}
-	
-	
 
+
+	@After ("@duotify_db_only")
+	public void tearDownScenarioDB(Scenario scenario) {
+
+		DBUtils.close();
+	}
 	
 
 }

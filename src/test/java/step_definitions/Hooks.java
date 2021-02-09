@@ -17,7 +17,7 @@ public class Hooks {
 	
 	
 	
-	@Before ("not @db_only")
+	@Before ()
 	public void setupScenario() {
 		
 		Driver.getDriver().manage().timeouts().
@@ -27,17 +27,12 @@ public class Hooks {
 		
 	}
 	
-	@Before ("@db_only")
-	public void setupDB() {
-		
-		System.out.println("Establishing connectio  to DB");
-		
-	}
+
 	
 	
 	
 	
-	@After ("not @db_only")
+	@After ()
 	public void tearDownScenario(Scenario scenario) {
 		
 		if(scenario.isFailed()) {
@@ -54,12 +49,7 @@ public class Hooks {
 	}
 	
 	
-	@After ("@db_only")
-	public void tearDownDB() {
-		
-		System.out.println("Closing the connection to DB and cleaning the db");
-		
-	}
+
 	
 
 }
