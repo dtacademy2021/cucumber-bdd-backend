@@ -32,5 +32,18 @@ Feature:  Column names
       | dance      |
       | reggae     |
       | reggaeton  |
+      
+      
+      
+    @duotify_db_only
+  Scenario: Verify genres BRD
+
+    When I retrieve genre names for the genres table
+    Then The names of the genres should be the following
+      | rap        |
+      | pop        |
+      | techno     |
+      | rnb        |
+  
 
 
