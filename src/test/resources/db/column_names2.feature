@@ -44,6 +44,14 @@ Feature:  Column names
       | pop        |
       | techno     |
       | rnb        |
-  
 
 
+  @duotify_db_only
+  Scenario: Verify genres BDD
+
+    When I retrieve genre names for the genres table
+    Then The names of the genres should be the following
+      | rap        |
+      | pop        |
+      | techno     |
+      | rnb        |
