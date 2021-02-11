@@ -1,13 +1,18 @@
 package apiTests;
 
+import apiTests.payloads.Payloads;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.json.Json;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 import static  io.restassured.matcher.RestAssuredMatchers.*;
@@ -98,43 +103,96 @@ public class RestAsssuredDemo {
     public void end2endTestPlacesAPI(){
           baseURI = "http://3.6.24.244/maps/api/place";
          //Create a place
-        given().  log().all().
+        String placeName = "Duotech";
+        String phoneNo = "571-222-3456";
+       JsonPath jsonPath= given().log().all().
                 queryParam("key", "qaclick123").
                 header("Content-Type", "application/json").
 //                contentType(ContentType.JSON).
+        header("Accept", "*/*").
+                        body(Payloads.addPlaceRequestBody(placeName, phoneNo )).
+                        when().log().all().
+                        post("/add/json").
+                        then().log().all().
+                        assertThat().
+                        statusCode(equalTo(200)).
+                        body("status", equalTo("OK")).
+                        body("scope", equalTo("APP")).extract().jsonPath();
+
+//        System.out.println(map);
+//
+//        String place_id = map.get("place_id");
+//
+//        System.out.println((String)place_id);
+
+
+        String place_id = jsonPath.getString("place_id");
+
+
+
+
+
+        // We can extract the response body as:
+        // 1. String -> extract().asString()
+        // 2. JsonPath object -> extract().jsonPath();
+        // 3. Map object -> extract().as(Map.class);
+
+
+//        System.out.println(responseBody);
+        // Retrieve the place
+
+        given().
+                queryParam("key", "qaclick123").
+                queryParam("place_id", place_id).
+                header("Accept", "*/*").
+        when().
+                get("/get/json").
+        then().
+                assertThat().
+                statusCode(is(200)).
+                body("name", equalTo(placeName)).
+                body("phone_number", equalTo(phoneNo));
+
+
+
+
+
+
+
+        //Delete the place
+
+        given().
+                queryParam("key", "qaclick123").
+                contentType(ContentType.JSON).
                 header("Accept", "*/*").
                 body("{\n" +
-                        " \"location\": {\n" +
-                        "   \"lat\": -77.2273128,\n" +
-                        "   \"lng\": 38.9151944\n" +
-                        " },\n" +
-                        " \"accuracy\": 50,\n" +
-                        " \"name\": \"Duotech Academy\",\n" +
-                        " \"phone_number\": \"(571) 295-4555\",\n" +
-                        " \"address\": \"8133 Leesburg Pike STE 300, Vienna, VA 22182\",\n" +
-                        " \"types\": [\n" +
-                        "   \"academy\",\n" +
-                        "   \"bootcamp\"\n" +
-                        " ],\n" +
-                        " \"website\": \"duotech.io\",\n" +
-                        " \"language\": \"English\"\n" +
+                        "    \"place_id\": \""+place_id+"\"\n" +
                         "}\n").
-                when(). log().all().
-                post("/add/json").
-        then().  log().all().
+
+
+                when().
+
+                delete("/delete/json").
+                then().
+
                 assertThat().
-                statusCode(equalTo(200)).
-                body("status", equalTo("OK")).
-                body("scope", equalTo("APP"));
+                statusCode(is(200)).
+                body("status", equalTo("OK"));
 
 
 
+          // Retrieve the plave with GET and verify that it returns error status code and error message
 
-
-
-
-        // Retrieve the place
-        //Delete the place
+        given().
+                queryParam("key", "qaclick123").
+                queryParam("place_id", place_id).
+                header("Accept", "*/*").
+                when().
+                get("/get/json").
+                then(). log().all().
+                assertThat().
+                statusCode(is(404)).
+                body("msg", containsString("doesn't exist"));
 
 
 
