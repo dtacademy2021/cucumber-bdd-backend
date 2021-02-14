@@ -1,18 +1,13 @@
 package apiTests;
 
-import apiTests.payloads.Payloads;
+import apiTests.pojos.placePojos.Location;
+import apiTests.pojos.placePojos.Place;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.*;
 
-import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -74,6 +69,77 @@ public class SendPayloadAsMap {
         System.out.println(map);
 
 //
+
+    }
+
+
+    @Test
+    public void sendPayloadAsJsonFile(){
+
+        RestAssured.baseURI = "http://3.6.24.244/maps/api/place";
+
+        File jsonFile = new File("src/test/java/apiTests/payloads/place.json");
+
+
+
+
+
+
+
+        //Create a place
+
+         given().log().all().
+                queryParam("key", "qaclick123").
+//                header("Content-Type", "application/json").
+//                contentType(ContentType.JSON).
+        header("Accept", "*/*").
+                        body(jsonFile).
+                        when().log().all().
+                        post("/add/json").
+                        then().log().all().
+                        assertThat().
+                        statusCode(equalTo(200)).
+                        body("status", equalTo("OK")).
+                        body("scope", equalTo("APP"));
+
+
+    }
+
+
+    @Test
+    public void sendPayloadAsPojo(){
+
+        RestAssured.baseURI = "http://3.6.24.244/maps/api/place";
+
+
+        Place placePojo = new Place(
+                new Location(67.89, 79.0),
+                45,"Duotech", "1276572", "1321 hashjxc xshvah",
+                Arrays.asList("academy", "bootcamp"), "duotech", "english"
+                );
+
+
+
+
+
+
+
+        //Create a place
+
+        given().log().all().
+                queryParam("key", "qaclick123").
+//                header("Content-Type", "application/json").
+//                contentType(ContentType.JSON).
+        header("Accept", "*/*").
+                body(placePojo).
+                when().log().all().
+                post("/add/json").
+                then().log().all().
+                assertThat().
+                statusCode(equalTo(200)).
+                body("status", equalTo("OK")).
+                body("scope", equalTo("APP"));
+
 
     }
 
