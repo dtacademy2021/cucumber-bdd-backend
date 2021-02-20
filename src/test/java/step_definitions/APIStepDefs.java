@@ -1,5 +1,6 @@
 package step_definitions;
 
+import apiTests.examples.Endpoints;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,7 +14,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class APIStepDefs {
+public class APIStepDefs implements Endpoints {
 
    static {
        RestAssured.baseURI = "http://duobank-env.eba-bgkwzq3h.us-east-2.elasticbeanstalk.com/api";
@@ -78,6 +79,8 @@ public class APIStepDefs {
     }
 
 
-
-
+    @Override
+    public String getToken() {
+        return null;
+    }
 }

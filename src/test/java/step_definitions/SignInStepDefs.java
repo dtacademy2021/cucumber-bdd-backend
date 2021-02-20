@@ -19,7 +19,7 @@ public class SignInStepDefs {
 	@Given("The User is on the homepage")
 	public void the_User_is_on_the_homepage() {
 	   
-		Driver.getDriver().get(ConfigReader.getProperty("url"));
+		Driver.getDriver().get(ConfigReader.getProperty("UAT_URL"));
 			
 	}
 

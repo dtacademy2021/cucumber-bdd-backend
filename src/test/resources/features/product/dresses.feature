@@ -9,6 +9,8 @@ Feature: Verify Dresses page details
            | Evening Dresses |
            | Summer Dresses  |
       And  The page title should be "Dresses - My Store"
+
+
       
       
      

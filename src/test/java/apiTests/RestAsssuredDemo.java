@@ -1,6 +1,7 @@
 package apiTests;
 
 import apiTests.payloads.Payloads;
+import apiTests.examples.Endpoints;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -8,14 +9,12 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.json.Json;
-
-import java.util.Map;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import utilities.Driver;
 
 import static io.restassured.RestAssured.*;
-import static  io.restassured.matcher.RestAssuredMatchers.*;
 import static  org.hamcrest.Matchers.*;
 
 public class RestAsssuredDemo {
@@ -58,6 +57,8 @@ public class RestAsssuredDemo {
         Assert.assertEquals(200, statusCode);
 
         Assert.assertTrue(s.contains("Georgia Aquarium"));
+
+
 
 
     }
@@ -108,11 +109,11 @@ public class RestAsssuredDemo {
        JsonPath jsonPath= given().log().all().
                 queryParam("key", "qaclick123").
                 header("Content-Type", "application/json").
-//                contentType(ContentType.JSON).
+                contentType(ContentType.JSON).
         header("Accept", "*/*").
                         body(Payloads.addPlaceRequestBody(placeName, phoneNo )).
                         when().log().all().
-                        post("/add/json").
+                        post(Endpoints.POST_PLACE).
                         then().log().all().
                         assertThat().
                         statusCode(equalTo(200)).
@@ -120,6 +121,8 @@ public class RestAsssuredDemo {
                         body("scope", equalTo("APP")).extract().jsonPath();
 
 //        System.out.println(map);
+
+        Driver.getDriver().findElement(By.xpath("sbhab")).sendKeys(Keys.END);
 //
 //        String place_id = map.get("place_id");
 //

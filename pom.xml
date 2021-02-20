@@ -141,7 +141,8 @@
 				<configuration>
 
 
-					<!-- <parallel>methods</parallel> <useUnlimitedThreads>true</useUnlimitedThreads> 
+					<!-- <parallel>methods</parallel>
+					<useUnlimitedThreads>true</useUnlimitedThreads>
 						-> for parallel run -->
 					<includes>
 						<!-- name of your Runner class -->
