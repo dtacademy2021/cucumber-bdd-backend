@@ -151,15 +151,11 @@ public class BrowserUtils {
 		}
 	}
 
-	public static WebElement fluentWait(WebElement webElement, int timeOutSeconds, int pollingSeconds) {
+	public static WebElement fluentWait(By by, int timeOutSeconds, int pollingSeconds) {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDriver())
 				.withTimeout(Duration.ofSeconds(timeOutSeconds)).pollingEvery(Duration.ofSeconds(pollingSeconds))
 				.ignoring(NoSuchElementException.class);
-		WebElement element = wait.until(new Function<WebDriver, WebElement>() {
-			public WebElement apply(WebDriver driver) {
-				return webElement;
-			}
-		});
+		WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
 		return element;
 	}
 

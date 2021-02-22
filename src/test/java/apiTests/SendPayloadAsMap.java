@@ -86,6 +86,8 @@ public class SendPayloadAsMap {
 
 
 
+
+
         //Create a place
 
          given().log().all().
